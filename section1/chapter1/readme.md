@@ -1,6 +1,8 @@
 I. Các khái niệm cơ bản về ML:
 Phân loại ML:
-
+    + Supervised learning
+    + Unsupervised learning
+    + Reinforce learninf
 Các khái niệm:
     - Overfit (low bias high variance) khi model quá khớp với dữ liệu training
     - Underfit (high bias low variance) khi model quá sai lệch
