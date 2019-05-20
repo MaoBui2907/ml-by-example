@@ -1,4 +1,5 @@
-I. Các khái niệm cơ bản về ML:
+# Sơ lược về machine learning
+## Các khái niệm cơ bản về ML:
 + Phân loại ML:
     - Supervised learning
     - Unsupervised learning
@@ -43,7 +44,7 @@ Các hàm đa thức bậc cao sẽ rất phù hợp với dữ liệu train nh�
     - với quá nhiều thuộc tính sẽ làm tăng số lần thực hiện tính toán
     - Giảm số chiều có thể sẽ làm mất mát thông tin.
 
-II. Các kỹ thuật tiền xử lý:
+## Các kỹ thuật tiền xử lý:
 + Chuẩn Cross-Industry Standard Process for Data Mining (CRISP-DM) gồm các bước:
     - Business understanding: Hiểu theo cách chuyên ngành, thường do các chuyên gia làm.
     - Data understanding: Hiểu và thống kê dữ liệu, hiểu theo hướng kỹ thuật. -> Thăm dò (phase exploration)
@@ -78,7 +79,7 @@ II. Các kỹ thuật tiền xử lý:
     - boosting: Các quá trình học tập sẽ có tính kế thừa từ các lần học trước, tập trung vào các thuộc tính hoặc điểm quan trọng.
     - stacking: đầu ra của thuật toán này có thể làm đầu vào của thuật toán khác để tạo ra nhiều lần học liên tiếp.
 
-III. Chuẩn bị môi trường cần thiết cho các bài thực hành sau:
+## Chuẩn bị môi trường cần thiết cho các bài thực hành sau:
 - Python
 - Numpy
 - Scipy
