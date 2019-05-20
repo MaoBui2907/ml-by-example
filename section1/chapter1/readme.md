@@ -2,9 +2,9 @@ I. Các khái niệm cơ bản về ML:
 Phân loại ML:
 
 Các khái niệm:
-    -- Overfit (low bias high variance) khi model quá khớp với dữ liệu training
-    -- Underfit (high bias low variance) khi model quá sai lệch
-    --> Bias-Variance trade-off
+    - Overfit (low bias high variance) khi model quá khớp với dữ liệu training
+    - Underfit (high bias low variance) khi model quá sai lệch
+    -> Bias-Variance trade-off
 
 MSE (mean squared error) kết hợp cả sai số và phương sai
 
