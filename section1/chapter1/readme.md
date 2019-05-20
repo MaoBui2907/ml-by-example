@@ -20,11 +20,11 @@ Các hàm đa thức bậc cao sẽ rất phù hợp với dữ liệu train nh�
 + Cross-validation: thường dùng khi không có dữ liệu đủ lớn, không thể chia ra nhiều các subset, dùng để giảm thiểu overfit
     Có 2 loại chính:
         
-        -- exhaustive (toàn diện)
+        - exhaustive (toàn diện)
         Chia ra n subset (với n là độ lớn dữ liệu), và n lần học. Mỗi lần học thứ i sẽ tách phần tử thứ i làm test-set
         -> Leave-One-Out-Cross-Validation (LOOCV)
 
-        -- non-exhaustive (Không toàn diện)
+        - non-exhaustive (Không toàn diện)
         Tương tự LOOCV nhưng dữ liệu được chia thành K phần lớn hơn (k thường là 3, 5, 10)
         -> K-fold cross-validation
 
@@ -32,11 +32,13 @@ Các hàm đa thức bậc cao sẽ rất phù hợp với dữ liệu train nh�
         -> holdout
 
 + Regularization: thay đổi mô hình hoặc cách chạy để làm giảm overfit
-    -- Early stoping: ép mô hình chạy trong khoảng thời gian hoặc đặt một số tiêu chí dừng.
-    -- regularization loss function: Thêm vào hàm mất mát một số hạng nào đó để đánh giá độ phức tạp của mô hình.
+
+    - Early stoping: ép mô hình chạy trong khoảng thời gian hoặc đặt một số tiêu chí dừng.
+    - regularization loss function: Thêm vào hàm mất mát một số hạng nào đó để đánh giá độ phức tạp của mô hình.
 
 + Lựa chọn thuộc tính và giảm số chiều:
-    -- với quá nhiều thuộc tính sẽ làm tăng số lần thực hiện tính toán
-    -- Giảm số chiều có thể sẽ làm mất mát thông tin.
+
+    - với quá nhiều thuộc tính sẽ làm tăng số lần thực hiện tính toán
+    - Giảm số chiều có thể sẽ làm mất mát thông tin.
 
     
