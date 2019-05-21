@@ -126,3 +126,8 @@ Downloading dataset from https://ndownloader.figshare.com/files/5975967 (14 MB)
 ```
 
 - Tìm hiểu bộ dữ liệu:
+    _Các câu lệnh cơ bản và hiển thị dữ liệu trong file code/main.py_
+
+    ![alt dataset plot](./images/dataset-plot.png)
+
+    
