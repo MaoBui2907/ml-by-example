@@ -31,9 +31,9 @@
     - Gẵn nhãn từ loại cho từ.
     - Trong nltk có hỗ trợ hàm dựng sẵn là một kết quả của quá trình học máy với bộ dữ liệu corpus: *pos_tag()* trả về các ký hiệu nhãn từ loại.
     ``
-    >>> import nltk
-    >>> tokens = word_tokenize(sent)
-    >>> print(nltk.pos_tag(tokens))
+    \> import nltk
+    \> tokens = word_tokenize(sent)
+    \> print(nltk.pos_tag(tokens))
     [('I', 'PRP'), ('am', 'VBP'), ('reading', 'VBG'), ('a', 'DT'), ('book',
     'NN'), ('.', '.'), ('It', 'PRP'), ('is', 'VBZ'), ('Python', 'NNP'),
     ('Machine', 'NNP'), ('Learning', 'NNP'), ('By', 'IN'), ('Example', 'NNP'),
