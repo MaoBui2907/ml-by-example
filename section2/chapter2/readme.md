@@ -188,4 +188,13 @@ Downloading dataset from https://ndownloader.figshare.com/files/5975967 (14 MB)
     >>> all_names = set(names.words())
     ```
 
+## Trực quan hóa dữ liệu với t-SNE
+Dữ liệu hiện đã được vector hóa thành các vector 500 chiều. Chúng ta thường có thể cảm nhận dữ liệu với mô hình trực quan 3 chiều vì vậy cần có các phương pháp để giảm số chiều như là t-SNE.
+- Giới thiệu dimensionality reduction:
+    + Giảm số chiều là một kỹ thuật máy học quan trọng giúp giảm số lượng các thuộc tính đồng thời cố gắng dữ lại nhiều thông tin nhất có thể. nó thường có được bằng cách tạo ra được bộ thuộc tính mới thay thế cho một số bộ thuộc tính cũ.
+    + Việc giảm số chiều vừa dễ trực quan hóa vừa tối ưu quá trình tính toán, giảm sự dư thừa.
+    + Giảm kích thước không chỉ đơn giản là lấy ra một hoặc 2 cặp thuộc tính, nó chuyển đổi không gian với các thuộc tính ban đầu sang không gian có số chiều nhỏ hơn.
+    + Một ví dụ là phương pháp _Principal Component Analysis (PCA)_. Phương pháp này cho rằng dữ liệu thường không phân bố ngẫu nhiên mà sẽ phân bố theo đường hoặc mặt đặc biệt nào đó. PCA cho rằng các đường này là tuyến tính.
+
+
     

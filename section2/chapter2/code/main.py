@@ -3,6 +3,8 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction import stop_words
 import seaborn as sns
 import matplotlib.pyplot as plt
+from nltk.corpus import names
+from nltk.stem import WordNetLemmatizer
 
 # * Dữ liệu chỉ tải một lần rồi lưu lại để có thể sử dụng lần sau
 dataset = fetch_20newsgroups()
@@ -124,8 +126,8 @@ for data in dataset.data:
     
 # * tokenize kèm theo loại bỏ stop words với bộ english stop words scikit-learn
 count_vector_sw = CountVectorizer(stop_words="english", max_features=500)
-data_count_cleaned_sw = count_vector_sw.fit_transform(data_clearned)
-print(count_vector_sw.get_feature_names())
+# data_count_cleaned_sw = count_vector_sw.fit_transform(data_clearned)
+# print(count_vector_sw.get_feature_names())
 # ? Danh sách các thuộc tính hiện tại đã đẹp hơn
 # ? ['able', 'accept', 'access', 'according', 'act', 'actually', 'add', 'address', 'ago', 'agree', 'allow',
 # ?  'american', 'anonymous', 'answer', 'anybody', 'apple', 'application', 'apr', 'april', 'area',
@@ -175,4 +177,71 @@ print(count_vector_sw.get_feature_names())
 # ?  'various', 'version', 'video', 'view', 'vs', 'want', 'wanted', 'wants', 'war', 'water', 'way',
 # ?  'went', 'western', 'white', 'willing', 'win', 'window', 'windows', 'women', 'word', 'work', 'working',
 # ? 'works', 'world', 'worth', 'write', 'written', 'wrong', 'year', 'years', 'york', 'young']
+
+# * Tổng hợp lại các bước tiền xử lý
+
+data_clearned_v2 = []
+# * Bộ dữ liệu tên riêng
+
+all_names = set(names.words())
+
+lemmatizer = WordNetLemmatizer()
+
+for data in data_clearned:
+    # * lemmatizing dữ liệu
+    data_clearned_v2.append(' '.join(lemmatizer.lemmatize(word) for word in data.split() if word not in all_names))
+
+data_clearned_v2_vector = count_vector_sw.fit_transform(data_clearned_v2)
+
+# print(count_vector_sw.get_feature_names())
+# ? Các thuộc tính bây giờ đã rất đẹp
+# ? ['able', 'accept', 'access', 'according', 'act', 'action', 'actually', 'add', 'address', 'ago', 'agree',
+# ?  'algorithm', 'allow', 'american', 'anonymous', 'answer', 'anybody', 'apple', 'application', 'apr',
+# ?  'area', 'argument', 'armenian', 'armenians', 'article', 'ask', 'asked', 'assume', 'attack', 'attempt',
+# ?  'available', 'away', 'bad', 'based', 'basic', 'belief', 'believe', 'best', 'better', 'bible', 'big',
+# ?  'bike', 'bit', 'black', 'board', 'body', 'book', 'box', 'build', 'bus', 'business', 'buy', 'ca',
+# ?  'california', 'called', 'came', 'car', 'card', 'care', 'carry', 'case', 'cause', 'center', 'certain',
+# ?  'certainly', 'chance', 'change', 'check', 'child', 'chip', 'christians', 'church', 'city', 'claim',
+# ?  'clear', 'clipper', 'code', 'college', 'color', 'come', 'coming', 'command', 'comment', 'common',
+# ?  'communication', 'company', 'computer', 'computing', 'consider', 'considered', 'contact', 'control',
+# ?  'copy', 'correct', 'cost', 'country', 'couple', 'course', 'court', 'cover', 'create', 'crime',
+# ?  'current', 'cut', 'data', 'day', 'db', 'deal', 'death', 'department', 'device', 'did', 'difference',
+# ?  'different', 'discussion', 'disk', 'display', 'division', 'dod', 'doe', 'does', 'doing', 'dos',
+# ?  'drive', 'driver', 'drug', 'early', 'earth', 'easy', 'effect', 'email', 'encryption', 'end',
+# ?  'engineering', 'entry', 'error', 'especially', 'event', 'evidence', 'exactly', 'example', 'expect',
+# ?  'experience', 'explain', 'face', 'fact', 'far', 'fast', 'federal', 'feel', 'figure', 'file', 'final',
+# ?  'following', 'food', 'force', 'form', 'free', 'friend', 'ftp', 'function', 'game', 'general',
+# ?  'getting', 'given', 'gmt', 'god', 'going', 'good', 'got', 'government', 'graphic', 'great', 'ground',
+# ?  'group', 'guess', 'gun', 'guy', 'ha', 'hand', 'hard', 'hardware', 'having', 'head', 'health', 'hear',
+# ?  'heard', 'hell', 'help', 'high', 'history', 'hit', 'hockey', 'hold', 'home', 'hope', 'house', 'human',
+# ?  'ibm', 'idea', 'image', 'important', 'include', 'includes', 'including', 'individual', 'info',
+# ?  'information', 'instead', 'institute', 'interested', 'interesting', 'international', 'internet',
+# ?  'israeli', 'issue', 'jewish', 'jews', 'job', 'just', 'key', 'kill', 'killed', 'kind', 'know', 'known',
+# ?  'large', 'later', 'launch', 'law', 'le', 'lead', 'league', 'left', 'legal', 'let', 'level', 'life',
+# ?  'light', 'like', 'likely', 'line', 'list', 'little', 'live', 'local', 'long', 'longer', 'look',
+# ?  'looking', 'lost', 'lot', 'love', 'low', 'machine', 'mail', 'main', 'major', 'make', 'making', 'man',
+# ?  'manager', 'matter', 'maybe', 'mean', 'medical', 'member', 'memory', 'men', 'message', 'method',
+# ?  'military', 'million', 'mind', 'mode', 'model', 'money', 'monitor', 'month', 'moral', 'mouse', 'na',
+# ?  'nasa', 'national', 'near', 'need', 'needed', 'network', 'new', 'news', 'nice', 'north', 'note',
+# ?  'number', 'offer', 'office', 'old', 'open', 'opinion', 'order', 'original', 'output', 'package',
+# ?  'particular', 'past', 'pay', 'pc', 'people', 'period', 'person', 'personal', 'phone', 'place',
+# ?  'play', 'player', 'point', 'police', 'policy', 'political', 'position', 'possible', 'post', 'posted',
+# ?  'posting', 'power', 'president', 'press', 'pretty', 'previous', 'price', 'private', 'probably',
+# ?  'problem', 'product', 'program', 'project', 'provide', 'public', 'purpose', 'question', 'quite',
+# ?  'radio', 'rate', 'read', 'reading', 'real', 'really', 'reason', 'recently', 'reference', 'religion',
+# ?  'religious', 'remember', 'reply', 'report', 'research', 'response', 'rest', 'result', 'return',
+# ?  'right', 'road', 'rule', 'run', 'running', 'said', 'sale', 'san', 'save', 'saw', 'say', 'saying',
+# ?  'school', 'science', 'screen', 'scsi', 'second', 'section', 'security', 'seen', 'sell', 'send',
+# ?  'sense', 'sent', 'serial', 'server', 'service', 'services', 'set', 'shall', 'short', 'shot',
+# ?  'similar', 'simple', 'simply', 'single', 'site', 'situation', 'size', 'small', 'software', 'sort',
+# ?  'sound', 'source', 'space', 'special', 'specific', 'speed', 'standard', 'start', 'started',
+# ?  'state', 'statement', 'stop', 'strong', 'study', 'stuff', 'subject', 'sun', 'support', 'sure',
+# ?  'systems', 'taken', 'taking', 'talk', 'talking', 'tape', 'tax', 'team', 'technical', 'technology',
+# ?  'tell', 'term', 'test', 'texas', 'text', 'thanks', 'thing', 'think', 'thinking', 'thought', 'time',
+# ?  'tin', 'today', 'told', 'took', 'total', 'tried', 'true', 'truth', 'try', 'trying', 'turkish', 'turn',
+# ?  'type', 'understand', 'united', 'university', 'unix', 'unless', 'usa', 'use', 'used', 'user', 'using',
+# ?  'usually', 'value', 'various', 'version', 'video', 'view', 'wa', 'want', 'wanted', 'war', 'water',
+# ?  'way', 'weapon', 'week', 'went', 'western', 'white', 'widget', 'willing', 'win', 'window', 'windows',
+# ?  'wish', 'woman', 'word', 'work', 'working', 'world', 'worth', 'write', 'written', 'wrong', 'year',
+# ?  'york', 'young']
 
