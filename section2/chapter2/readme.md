@@ -90,7 +90,7 @@
         - similarity querying (truy vấn tương đồng): tìm ra đối tượng tương tự như đối tượng đầu vào.
         - Distributed computing (tính toán phân tán): giúp quá trình tính toán nhanh từ hàng triệu văn bản
 
-## Làm việc với bộ dữ liệu 20 nhóm tin
+## Giới thiệu bộ dữ liệu 20 nhóm tin
 
 - Tổng quan:
     - Dữ liệu sẽ gồm 20000 văn bản tin tức được phân vào 20 nhóm tin sau:
@@ -129,5 +129,63 @@ Downloading dataset from https://ndownloader.figshare.com/files/5975967 (14 MB)
     _Các câu lệnh cơ bản và hiển thị dữ liệu trong file code/main.py_
 
     ![alt dataset plot](./images/dataset-plot.png)
+
+## Phân tích bộ dữ liệu 20 nhóm tin
+
+- Đếm số lần xuất hiện của tất cả các token:
+    + Đây gọi là mô hình bag of words (BoW).
+    + Mô hình này sẽ tạo ra một bộ từ điển là tất cả các token xuất hiện trong bộ dữ liệu rồi đếm số lần xuất hiện bên trong mỗi câu.
+    + Mô hình này sẽ bỏ qua hoàn toàn nghĩa và thứ tự của các từ trong câu.
+    + Có thể mở rộng bằng cách thêm thứ tự và chú ý PoS của từ nhưng sẽ cần nhiều tính toán hơn và việc lập trình cũng nhiều khó khăn hơn.
+    + Ví dụ với dữ liệu này, dùng hàm _CountVectorizer_ của _scikit-learn_ để tách từ với dạng unigrams.
+    ```
+    >>> from sklearn.feature_extraction.text import CountVectorizer
+    >>> count_vector = CountVectorizer(max_features=500)
+    >>> data_count = count_vector.fit_transform(groups.data)
+    ```
+    + Với cách làm hiện tại 500 thuộc tính được lấy ra phần lớn là số, một số ký tự lạ như 'a86' hoặc các từ không có nhiều đóng góp nghĩa cho câu (the, then, then,...) và các từ tương đương nhau (tell - told, use - used, time - times)
+
+- Tiền xử lý văn bản:
+    + Ở đây, chúng ta sẽ loại bỏ hết tất cả các từ có số, ký tự đặc biệt, dấu câu,... chỉ dữ lại từ có các ký tự chữ cái.
+
+- Loại bỏ stop words:
+    + Stop words là những từ phổ biến, ít cung cấp dữ liệu trong các bài toán phân lớp. trong mô hình BoW, các từ này gây thêm nhiễu và tăng yêu cầu tính toán, vì vậy cẩn được loại bỏ.
+    + Không có danh sách tổng quát về các stop words, mỗi thư viện thường cung cấp một stop words list.
+    + Danh sách stop words trong scikit-learn:
+    ```
+    >>> from sklearn.feature_extraction import stop_words
+    >>> print(stop_words.ENGLISH_STOP_WORDS)
+    frozenset({'most', 'three', 'between', 'anyway', 'made', 'mine', 'none',
+    'could', 'last', 'whenever', 'cant', 'more', 'where', 'becomes', 'its',
+    'this', 'front', 'interest', 'least', 're', 'it', 'every', 'four', 'else',
+    'over', 'any', 'very', 'well', 'never', 'keep', 'no', 'anything', 'itself',
+    'alone', 'anyhow', 'until', 'therefore', 'only', 'the', 'even', 'so',
+    'latterly', 'above', 'hereafter', 'hereby', 'may', 'myself', 'all',
+    'those', 'down',
+    ......
+    ......
+    'him', 'somehow', 'or', 'per', 'nowhere', 'fifteen', 'via', 'must',
+    'someone', 'from', 'full', 'that', 'beyond', 'still', 'to', 'get',
+    'himself', 'however', 'as', 'forty', 'whatever', 'his', 'nothing',
+    'though', 'almost', 'become', 'call', 'empty', 'herein', 'than', 'while',
+    'bill', 'thru', 'mostly', 'yourself', 'up', 'former', 'each', 'anyone',
+    'hundred', 'several', 'others', 'along', 'bottom', 'one', 'five',
+    'therein', 'was', 'ever', 'beside', 'everyone'})
+    ```
+    + Sau khi loại bỏ stop words danh sach các thuộc tính đã đẹp hơn, tuy nhiên, còn có một số thuộc tính là tên riêng như 'micheal'
+
+- Stemming và lemmatizing:
+    + Stemming là cách làm đơn giản, nhanh hơn với công việc chủ yếu là cắt bỏ ký tự của từ nên đôi khi các từ được stemming sẽ không đúng. ví dụ _trying và try -> tri_
+    + Lemmatizing chậm nhưng chính xác hơn bằng việc tra từ điển các từ tạo ra để đảm bảo tính đúng đắn.
+    + Dùng công cụ _WordNetLemmatizer_ của nltk:
+    ```
+    >>> from nltk.stem import WordNetLemmatizer
+    >>> lemmatizer = WordNetLemmatizer()
+    ```
+    + Ngoài ra nltk có xây dựng sẵn bộ dữ liệu tên riêng _names_
+    ```
+    >>> from nltk.corpus import names
+    >>> all_names = set(names.words())
+    ```
 
     
