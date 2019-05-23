@@ -273,28 +273,29 @@ count_vector_sw = CountVectorizer(stop_words="english", max_features=500)
 # plt.scatter(data_tsne[:, 0], data_tsne[:, 1], c=dataset_3.target)
 # plt.show()
 
-# * Lấy ra 5 nhóm tin có chủ đề gần nhau
-categories_5 = ['comp.graphics', 'comp.os.ms-windows.misc', 'comp.sys.ibm.pc.hardware', 
-                'comp.sys.mac.hardware', 'comp.windows.x']
-dataset_5 = fetch_20newsgroups(categories=categories_5)
 
-# * Thực hiện tiền xử lý
-data_clearned_3 = []
+# # * Lấy ra 5 nhóm tin có chủ đề gần nhau
+# categories_5 = ['comp.graphics', 'comp.os.ms-windows.misc', 'comp.sys.ibm.pc.hardware', 
+#                 'comp.sys.mac.hardware', 'comp.windows.x']
+# dataset_5 = fetch_20newsgroups(categories=categories_5)
 
-all_names = set(names.words())
+# # * Thực hiện tiền xử lý
+# data_clearned_3 = []
 
-lemmatizer = WordNetLemmatizer()
+# all_names = set(names.words())
 
-for data in dataset_5.data:
-    data_clearned_3.append(' '.join(lemmatizer.lemmatize(word) for word in data.split() if word not in all_names and is_letter_only(word)))
+# lemmatizer = WordNetLemmatizer()
 
-data_clearned_3_vector = count_vector_sw.fit_transform(data_clearned_3)
+# for data in dataset_5.data:
+#     data_clearned_3.append(' '.join(lemmatizer.lemmatize(word) for word in data.split() if word not in all_names and is_letter_only(word)))
 
-# * Giảm số chiều với t-SNE
-tsne_model = TSNE(n_components=2, perplexity=40, learning_rate=500, random_state=42)
-data_tsne = tsne_model.fit_transform(data_clearned_3_vector.toarray())
-print(data_tsne)
+# data_clearned_3_vector = count_vector_sw.fit_transform(data_clearned_3)
 
-# * trực quan hóa bằng đồ thị các điểm sau khi đã giảm chiều
-plt.scatter(data_tsne[:, 0], data_tsne[:, 1], c=dataset_5.target)
-plt.show()
+# # * Giảm số chiều với t-SNE
+# tsne_model = TSNE(n_components=2, perplexity=40, learning_rate=500, random_state=42)
+# data_tsne = tsne_model.fit_transform(data_clearned_3_vector.toarray())
+# print(data_tsne)
+
+# # * trực quan hóa bằng đồ thị các điểm sau khi đã giảm chiều
+# plt.scatter(data_tsne[:, 0], data_tsne[:, 1], c=dataset_5.target)
+# plt.show()
