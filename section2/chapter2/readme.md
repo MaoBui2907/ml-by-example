@@ -194,7 +194,54 @@ Dữ liệu hiện đã được vector hóa thành các vector 500 chiều. Ch�
     + Giảm số chiều là một kỹ thuật máy học quan trọng giúp giảm số lượng các thuộc tính đồng thời cố gắng dữ lại nhiều thông tin nhất có thể. nó thường có được bằng cách tạo ra được bộ thuộc tính mới thay thế cho một số bộ thuộc tính cũ.
     + Việc giảm số chiều vừa dễ trực quan hóa vừa tối ưu quá trình tính toán, giảm sự dư thừa.
     + Giảm kích thước không chỉ đơn giản là lấy ra một hoặc 2 cặp thuộc tính, nó chuyển đổi không gian với các thuộc tính ban đầu sang không gian có số chiều nhỏ hơn.
-    + Một ví dụ là phương pháp _Principal Component Analysis (PCA)_. Phương pháp này cho rằng dữ liệu thường không phân bố ngẫu nhiên mà sẽ phân bố theo đường hoặc mặt đặc biệt nào đó. PCA cho rằng các đường này là tuyến tính.
+    + Một ví dụ là phương pháp _Principal Component Analysis (PCA)_. Phương pháp này cho rằng dữ liệu thường không phân bố ngẫu nhiên mà sẽ phân bố theo đường hoặc mặt đặc biệt nào đó. PCA chọn ra các trường hợp đường này là tuyến tính.
+    + Một thuật toán mạnh mẽ khác là _Non-negative matrix factorization (NMF)_.
+    + Phần lớn các thuật toán giảm chiều dữ liệu đều là thuật toán học không giám sát bởi vì các nhãn nếu có không được sử dụng để chuyển đổi dữ liệu.
 
+- Giới thiệu về t-SNE (t-distributed Stochastic Neighbor Embedding):
+    + Là một thuật toán giảm kích thước dữ liệu phi tuyến được phát triển bởi _Laurens van der Maaten_ và _Geoffrey Hinton_
+    + Đúng như tên gọi của nó, t-SNE nhúng dữ liệu chiều cao vào không gian chiều thấp (thường là hai chiều hoặc ba chiều) trong đó sự tương đồng giữa các mẫu dữ liệu lân cận được bảo toàn.
+    + Đầu tiên, nó mô hình hóa các dữ liệu lân cận nhau thành phân phối xác suất sao cho xác suất cao với các điểm tương đồng và xác suất rất thấp đối với các điểm không tương đồng. Các điểm lân cận thường được xác định bằng khoảng cách euclide hoặc các cách khác tương tự.
+    + Tiếp theo, nó xây dựng một phép chiếu lên một không gian chiều thấp trong đó sự phân kỳ giữa phân phối đầu vào và phân phối đầu ra được giảm thiểu.
+    + Không gian nhiều chiều ban đầu được phân phối theo xác suất gaussian, không gian ít chiều đầu ra sẽ theo phân phối t-distribution
+    + t-SNE trong scikit-learn:
+    ```
+    >>> from sklearn.manifold import TSNE
+    ```
+- Thử dùng t-SNE với dữ liệu nhóm tin:
+    + Chọn ra 3 nhóm tin khác biệt nhau:_talk.religion.misc, comp.graphics và sci.space_
+    + Đọc dữ liệu của 3 nhóm tin:
+    ```
+    >>> categories_3 = ['talk.religion.misc', 'comp.graphics', 'sci.space']
+    >>> groups_3 = fetch_20newsgroups(categories=categories_3)
+    ```
+    + Sau giai đoạn tiền xử lý như các bước trên, dữ liệu thu được sẽ là một loạt các sparse vector 500 chiều.
+    + Dùng _t-SNE_ để giảm số chiều của dữ liệu trên trong sklearn:
+    ```
+    >>> tsne_model = TSNE(n_components=2, perplexity=40, random_state=42, learning_rate=500)
+    >>> data_tsne = tsne_model.fit_transform(data_cleaned_count_3.toarray())
+    ``` 
+    + Một số tham số đầu vào quan trọng của _sklearn.manifold.TSNE_:
+        - n_components: số chiều đầu ra
+        - perplexity: số điểm gần nhất được chọn để so sánh (mặc định 30) giá trị từ 5 đến 50
+        - random_state: seed random
+        - learning_rate: yếu tố ảnh hưởng đến tốc độ học của thuật toán (mặc định 200) giá trị từ 10 đến 1000.
+        - Dữ liệu đầu vào phải là một _dense matrix_ vì vậy phải chuyển đổi từ ma trận thưa sang ma trận dày với _toarray()_(sẽ trả về một ndarray) _todense()_(sẽ trả về một matrix)
+    + Đầu ra nhận được sẽ là một danh sách các vector 2 chiều.
+    + Đến đây có thể trực quan hóa bằng cách vẽ đồ thị 2 chiều với dữ liệu có được hiện tại.
+    ```
+    >>> import matplotlib.pyplot as plt
+    >>> plt.scatter(data_tsne[:, 0], data_tsne[:, 1], c=groups_3.target)
+    >>> plt.show()
+    ```
+    ![alt plot](./images/plot.png)
+    + Các điểm dữ liệu cùng màu nằm gần nhau tạo ra các khối dữ liệu dễ nhận biết.
+    + Tiếp theo thử dùng tSNE với 5 nhóm dữ liệu có nội dung khá gần nhau _'comp.graphics','comp.os.ms-windows.misc','comp.sys.ibm.pc.hardware','comp.sys.mac.hardware','comp.windows.x'_
+    ![alt plot_5](./images/plot_5.png)
+    + Các dữ liệu được rải đều ở các khối -> dữ nguyên được tương quan giữa các điểm dữ liệu.
 
-    
+## Tổng kết:
+Trong chương này, các vấn đề đã được nêu ra:
++ Cơ bản về NLP
++ Các kỹ thuật xử lý văn bản: stemming, lemmatizing, PoS tagging, tokenizing,... với sklearn và spaCy.
++ Kỹ thuật giảm chiều vector t-SNE

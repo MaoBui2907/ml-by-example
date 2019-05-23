@@ -5,6 +5,8 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 from nltk.corpus import names
 from nltk.stem import WordNetLemmatizer
+from sklearn.manifold import TSNE
+import matplotlib.pyplot as plt
 
 # * Dữ liệu chỉ tải một lần rồi lưu lại để có thể sử dụng lần sau
 dataset = fetch_20newsgroups()
@@ -119,10 +121,10 @@ def is_letter_only(word):
             return False
     return True
 
-data_clearned = []
+# data_clearned = []
 
-for data in dataset.data:
-    data_clearned.append(' '.join(word for word in data.split() if is_letter_only(word)))
+# for data in dataset.data:
+#     data_clearned.append(' '.join(word for word in data.split() if is_letter_only(word)))
     
 # * tokenize kèm theo loại bỏ stop words với bộ english stop words scikit-learn
 count_vector_sw = CountVectorizer(stop_words="english", max_features=500)
@@ -180,18 +182,18 @@ count_vector_sw = CountVectorizer(stop_words="english", max_features=500)
 
 # * Tổng hợp lại các bước tiền xử lý
 
-data_clearned_v2 = []
+# data_clearned_v2 = []
 # * Bộ dữ liệu tên riêng
 
-all_names = set(names.words())
+# all_names = set(names.words())
 
-lemmatizer = WordNetLemmatizer()
+# lemmatizer = WordNetLemmatizer()
 
-for data in data_clearned:
-    # * lemmatizing dữ liệu
-    data_clearned_v2.append(' '.join(lemmatizer.lemmatize(word) for word in data.split() if word not in all_names))
+# for data in data_clearned:
+#     # * lemmatizing dữ liệu
+#     data_clearned_v2.append(' '.join(lemmatizer.lemmatize(word) for word in data.split() if word not in all_names))
 
-data_clearned_v2_vector = count_vector_sw.fit_transform(data_clearned_v2)
+# data_clearned_v2_vector = count_vector_sw.fit_transform(data_clearned_v2)
 
 # print(count_vector_sw.get_feature_names())
 # ? Các thuộc tính bây giờ đã rất đẹp
@@ -245,3 +247,54 @@ data_clearned_v2_vector = count_vector_sw.fit_transform(data_clearned_v2)
 # ?  'wish', 'woman', 'word', 'work', 'working', 'world', 'worth', 'write', 'written', 'wrong', 'year',
 # ?  'york', 'young']
 
+# ! trực quan hóa dữ liệu, giảm chiều bằng t-SNE
+# # * Lấy ra 3 nhóm tin khác nhau
+# categories_3 = ['talk.religion.misc', 'comp.graphics', 'sci.space']
+# dataset_3 = fetch_20newsgroups(categories=categories_3)
+
+# # * Thực hiện tiền xử lý
+# data_clearned_3 = []
+
+# all_names = set(names.words())
+
+# lemmatizer = WordNetLemmatizer()
+
+# for data in dataset_3.data:
+#     data_clearned_3.append(' '.join(lemmatizer.lemmatize(word) for word in data.split() if word not in all_names and is_letter_only(word)))
+
+# data_clearned_3_vector = count_vector_sw.fit_transform(data_clearned_3)
+
+# # * Giảm số chiều với t-SNE
+# tsne_model = TSNE(n_components=2, perplexity=40, learning_rate=500, random_state=42)
+# data_tsne = tsne_model.fit_transform(data_clearned_3_vector.toarray())
+# print(data_tsne)
+
+# # * trực quan hóa bằng đồ thị các điểm sau khi đã giảm chiều
+# plt.scatter(data_tsne[:, 0], data_tsne[:, 1], c=dataset_3.target)
+# plt.show()
+
+# * Lấy ra 5 nhóm tin có chủ đề gần nhau
+categories_5 = ['comp.graphics', 'comp.os.ms-windows.misc', 'comp.sys.ibm.pc.hardware', 
+                'comp.sys.mac.hardware', 'comp.windows.x']
+dataset_5 = fetch_20newsgroups(categories=categories_5)
+
+# * Thực hiện tiền xử lý
+data_clearned_3 = []
+
+all_names = set(names.words())
+
+lemmatizer = WordNetLemmatizer()
+
+for data in dataset_5.data:
+    data_clearned_3.append(' '.join(lemmatizer.lemmatize(word) for word in data.split() if word not in all_names and is_letter_only(word)))
+
+data_clearned_3_vector = count_vector_sw.fit_transform(data_clearned_3)
+
+# * Giảm số chiều với t-SNE
+tsne_model = TSNE(n_components=2, perplexity=40, learning_rate=500, random_state=42)
+data_tsne = tsne_model.fit_transform(data_clearned_3_vector.toarray())
+print(data_tsne)
+
+# * trực quan hóa bằng đồ thị các điểm sau khi đã giảm chiều
+plt.scatter(data_tsne[:, 0], data_tsne[:, 1], c=dataset_5.target)
+plt.show()
