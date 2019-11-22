@@ -26,7 +26,7 @@ Trong thực tế, phân lớp được ứng dụng rộng rãi trong phân tí
 - Phân lớp naive bayes thuộc họ phân loại dựa trên xác suất của các feature rồi đưa ra xác suất dự đoán cho dữ liệu.
 - Định luật bayes: 
 
-![alt bayes theorem](./images/bayes_theorem.png)
+![alt bayes theorem](./images/bayes_theorem.PNG)
 
 ***Trong đó***
 - P(A|B) là xác suất để A xuất hiện với điều kiện B
@@ -55,7 +55,7 @@ Cần phân bộ dữ liệu trên vào k lớp (y1, y2, ..., yk)
 bài toán phân lớp được biến thành: tính xác suất có điều kiện của từng nhãn P(yk|x) rồi chọn ra nhãn có xác suất lớn nhất
 theo công thức bayes:
 
-![alt naive bayes](./images/naive_bayes.png)
+![alt naive bayes](./images/naive_bayes.PNG)
 
 ***Trong đó***
 - P(yk) miêu tả cách các lớp được phân phối. Được gọi là *prior* của kỹ thuật phân phối xác suất bayes. prior có thể được định trước (thông thường xác suất mỗi lớp là ngang nhau) hoặc rút ra từ bộ training
@@ -70,7 +70,7 @@ các xác suất điều kiện của thuộc tính có thể tính thông qua d
 
 ***tóm lại***
 
-![alt naive bayes flow](./images/naive_bayes_flow.png)
+![alt naive bayes flow](./images/naive_bayes_flow.PNG)
 
 ## Các phân phối để tính P(xn|yk)
 ### Gaussian Naive Bayes
@@ -86,7 +86,7 @@ các xác suất điều kiện của thuộc tính có thể tính thông qua d
 
 ***ví dụ minh họa***
 
-![alt spam sample](./images/spam_sample.png)
+![alt spam sample](./images/spam_sample.PNG)
     
 - **B1: tính *prior*** gọi S là biến cố thư là spam, NS là biến cố thư không phải spam
 -> P(S) = 3/4; P(NS) = 1/4
@@ -111,7 +111,7 @@ P(NS|x) = P(x|NS) * P(NS) / P(x) tương đương với P(x|NS) * P(NS)
 
 Ta có được:
 
-![alt spam naive bayes](./images/spam_bayes.png)
+![alt spam naive bayes](./images/spam_bayes.PNG)
 
 tỉ lệ trên < 1
 -> gắn nhãn NS
