@@ -28,8 +28,14 @@
 
 ### Hiện thực k-means với sklearn
 
+
 ### Cách chọn giá trị k
+Với bài toán thực tế, khó có thể có được số cụm cần phân chia. vì vậy cần có phương pháp để tìm ra được số cụm - Phương pháp Elbow
+Phương phá Elbow:
+- Các giá trị k khác nhau được lựa chọn và mô hình được tạo ra với giá trị tương ứng.
+- Với mỗi mô hình, tính tổng các bình phương lỗi (Sum of squared errors - SSE) - tổng khoảng cách trong cụm - cho mỗi centroid.
+- K được chọn là khi mức giảm của SSE không thay đổi đáng kể, có nghĩa là phân thêm nhiều cụm hơn nữa cũng không thay đổi gì nhiều.
 
+### Bài toán 20 newsgroup với K-means
 
-### 
 
