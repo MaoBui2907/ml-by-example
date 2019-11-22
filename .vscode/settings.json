@@ -1,5 +1,0 @@
-{
-    "python.pythonPath": "/home/nguyenmao/Data/Project/Public Project/Python-ml-by-example/venv/bin/python3",
-    "git.ignoreLimitWarning": true,
-    "python.formatting.provider": "autopep8"
-}

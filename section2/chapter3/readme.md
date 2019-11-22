@@ -25,3 +25,11 @@
 
 ### Hiện thực k-means clustering
 
+
+### Hiện thực k-means với sklearn
+
+### Cách chọn giá trị k
+
+
+### 
+
