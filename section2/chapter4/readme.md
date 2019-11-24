@@ -116,3 +116,9 @@ Ta có được:
 tỉ lệ trên < 1
 -> gắn nhãn NS
 
+## Hiện thực thuật toán naive bayes
+**Bộ dữ liệu:** http://www.aueb.gr/users/ion/data/enron-spam/preprocessed/enron1.tar.gz
+
+## Naive bayes với sklearn
+
+
